@@ -1,0 +1,25 @@
+Traceback (most recent call last):
+  File "/opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py", line 41, in <module>
+    import genmsg.template_tools
+  File "/opt/ros/kinetic/lib/python2.7/dist-packages/genmsg/template_tools.py", line 39, in <module>
+    import em
+ModuleNotFoundError: No module named 'em'
+make[2]: *** [/home/stepjam/catkin_ws/devel/include/geometry_msgs/Accel.h] Error 1
+make[2]: *** Waiting for unfinished jobs....
+Traceback (most recent call last):
+  File "/opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py", line 41, in <module>
+    import genmsg.template_tools
+  File "/opt/ros/kinetic/lib/python2.7/dist-packages/genmsg/template_tools.py", line 39, in <module>
+    import em
+ModuleNotFoundError: No module named 'em'
+make[2]: *** [/home/stepjam/catkin_ws/devel/include/geometry_msgs/AccelWithCovariance.h] Error 1
+Traceback (most recent call last):
+  File "/opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py", line 41, in <module>
+    import genmsg.template_tools
+  File "/opt/ros/kinetic/lib/python2.7/dist-packages/genmsg/template_tools.py", line 39, in <module>
+    import em
+ModuleNotFoundError: No module named 'em'
+make[2]: *** [/home/stepjam/catkin_ws/devel/include/geometry_msgs/AccelStamped.h] Error 1
+make[1]: *** [CMakeFiles/geometry_msgs_generate_messages_cpp.dir/all] Error 2
+make[1]: *** Waiting for unfinished jobs....
+make: *** [all] Error 2

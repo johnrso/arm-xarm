@@ -1,0 +1,37 @@
+CMake Deprecation Warning at CMakeLists.txt:1 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+CMake Deprecation Warning at /usr/src/gmock/CMakeLists.txt:41 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+CMake Deprecation Warning at /usr/src/gtest/CMakeLists.txt:43 (cmake_minimum_required):
+  Compatibility with CMake < 2.8.12 will be removed from a future version of
+  CMake.
+
+  Update the VERSION argument <min> value or use a ...<max> suffix to tell
+  CMake that the project does not need compatibility with older versions.
+
+
+[31m[1mCMake Error[0m at /opt/ros/kinetic/share/catkin/cmake/safe_execute_process.cmake:11 (message):
+  execute_process(/home/stepjam/miniconda/envs/py32/bin/python
+  "/opt/ros/kinetic/share/catkin/cmake/parse_package_xml.py"
+  "/opt/ros/kinetic/share/catkin/cmake/../package.xml"
+  "/home/stepjam/catkin_ws/build/xarm_sdk/catkin/catkin_generated/version/package.cmake")
+  returned error code No such file or directory
+[36mCall Stack (most recent call first):[0m
+  /opt/ros/kinetic/share/catkin/cmake/catkin_package_xml.cmake:74 (safe_execute_process)
+  /opt/ros/kinetic/share/catkin/cmake/all.cmake:168 (_catkin_package_xml)
+  /opt/ros/kinetic/share/catkin/cmake/catkinConfig.cmake:20 (include)
+  CMakeLists.txt:9 (find_package)
+
+

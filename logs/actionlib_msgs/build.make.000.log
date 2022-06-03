@@ -1,0 +1,21 @@
+[  0%] Built target _actionlib_msgs_generate_messages_check_deps_GoalStatus
+[  0%] Built target _actionlib_msgs_generate_messages_check_deps_GoalStatusArray
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target _actionlib_msgs_generate_messages_check_deps_GoalID
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_eus
+[  5%] [34m[1mGenerating C++ code from actionlib_msgs/GoalID.msg[0m
+Traceback (most recent call last):
+  File "/opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py", line 41, in <module>
+    import genmsg.template_tools
+  File "/opt/ros/kinetic/lib/python2.7/dist-packages/genmsg/template_tools.py", line 39, in <module>
+    import em
+ModuleNotFoundError: No module named 'em'
+CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/build.make:76: recipe for target '/home/stepjam/catkin_ws/devel/include/actionlib_msgs/GoalID.h' failed
+make[2]: *** [/home/stepjam/catkin_ws/devel/include/actionlib_msgs/GoalID.h] Error 1
+CMakeFiles/Makefile2:650: recipe for target 'CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/all' failed
+make[1]: *** [CMakeFiles/actionlib_msgs_generate_messages_cpp.dir/all] Error 2
+Makefile:145: recipe for target 'all' failed
+make: *** [all] Error 2

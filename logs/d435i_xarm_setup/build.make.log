@@ -1,0 +1,10 @@
+[ 16%] [32mBuilding CXX object CMakeFiles/obj2base.dir/src/tf_object_to_base.cpp.o[0m
+[ 16%] Built target xarm_msgs_generate_messages_cpp
+[ 33%] [32mBuilding CXX object CMakeFiles/findobj2d_grasp_api.dir/src/findobj_grasp_xarm_api.cpp.o[0m
+[ 50%] [32mBuilding CXX object CMakeFiles/findobj2d_grasp_moveit.dir/src/findobj_grasp_moveit_planner.cpp.o[0m
+[ 66%] [32m[1mLinking CXX executable /home/stepjam/catkin_ws/devel/lib/d435i_xarm_setup/obj2base[0m
+[ 66%] Built target obj2base
+[ 83%] [32m[1mLinking CXX executable /home/stepjam/catkin_ws/devel/lib/d435i_xarm_setup/findobj2d_grasp_moveit[0m
+[100%] [32m[1mLinking CXX executable /home/stepjam/catkin_ws/devel/lib/d435i_xarm_setup/findobj2d_grasp_api[0m
+[100%] Built target findobj2d_grasp_moveit
+[100%] Built target findobj2d_grasp_api

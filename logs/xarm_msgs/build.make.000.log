@@ -1,0 +1,171 @@
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_GetInt32
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_GripperState
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_SetAxis
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_TCPOffset
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_CIOState
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_ClearErr
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_SetInt16
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_IOState
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_GripperConfig
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_GetDigitalIO
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_GetAnalogIO
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_Move
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_SetDigitalIO
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_GripperMove
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_SetLoad
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_ConfigToolModbus
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_GetControllerDigitalIO
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_SetControllerAnalogIO
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_RobotMsg
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_MoveAxisAngle
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_SetFloat32
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_MoveVelo
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_SetMultipleInts
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_GetErr
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_SetString
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_SetToolModbus
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_MoveVelocity
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_PlayTraj
+[  0%] Built target _xarm_msgs_generate_messages_check_deps_GetFloat32List
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_cpp
+[  1%] [34m[1mGenerating Lisp code from xarm_msgs/IOState.msg[0m
+[  1%] [34m[1mGenerating Lisp code from xarm_msgs/RobotMsg.msg[0m
+[  1%] [34m[1mGenerating Lisp code from xarm_msgs/CIOState.msg[0m
+[  2%] [34m[1mGenerating Lisp code from xarm_msgs/Move.srv[0m
+[  3%] [34m[1mGenerating Lisp code from xarm_msgs/SetAxis.srv[0m
+[  4%] [34m[1mGenerating Javascript code from xarm_msgs/RobotMsg.msg[0m
+[  5%] [34m[1mGenerating Python from MSG xarm_msgs/RobotMsg[0m
+[  6%] [34m[1mGenerating Javascript code from xarm_msgs/IOState.msg[0m
+[  6%] [34m[1mGenerating Javascript code from xarm_msgs/CIOState.msg[0m
+[  7%] [34m[1mGenerating Lisp code from xarm_msgs/SetInt16.srv[0m
+[  7%] [34m[1mGenerating Javascript code from xarm_msgs/Move.srv[0m
+[  7%] [34m[1mGenerating Javascript code from xarm_msgs/SetAxis.srv[0m
+[  7%] [34m[1mGenerating Python from MSG xarm_msgs/IOState[0m
+[  8%] [34m[1mGenerating Lisp code from xarm_msgs/TCPOffset.srv[0m
+[  9%] [34m[1mGenerating Python from MSG xarm_msgs/CIOState[0m
+[ 11%] [34m[1mGenerating Javascript code from xarm_msgs/SetInt16.srv[0m
+[ 11%] [34m[1mGenerating Python code from SRV xarm_msgs/Move[0m
+[ 11%] [34m[1mGenerating Python code from SRV xarm_msgs/SetAxis[0m
+[ 11%] [34m[1mGenerating Lisp code from xarm_msgs/SetDigitalIO.srv[0m
+[ 12%] [34m[1mGenerating Python code from SRV xarm_msgs/SetInt16[0m
+[ 13%] [34m[1mGenerating Javascript code from xarm_msgs/TCPOffset.srv[0m
+[ 14%] [34m[1mGenerating Lisp code from xarm_msgs/GetDigitalIO.srv[0m
+[ 15%] [34m[1mGenerating Javascript code from xarm_msgs/SetDigitalIO.srv[0m
+[ 17%] [34m[1mGenerating Python code from SRV xarm_msgs/TCPOffset[0m
+[ 18%] [34m[1mGenerating Javascript code from xarm_msgs/GetDigitalIO.srv[0m
+[ 19%] [34m[1mGenerating Javascript code from xarm_msgs/GetAnalogIO.srv[0m
+[ 19%] [34m[1mGenerating Lisp code from xarm_msgs/GetAnalogIO.srv[0m
+[ 19%] [34m[1mGenerating Javascript code from xarm_msgs/ClearErr.srv[0m
+[ 19%] [34m[1mGenerating Javascript code from xarm_msgs/GetErr.srv[0m
+[ 19%] [34m[1mGenerating Python code from SRV xarm_msgs/SetDigitalIO[0m
+[ 20%] [34m[1mGenerating Lisp code from xarm_msgs/ClearErr.srv[0m
+[ 20%] [34m[1mGenerating Javascript code from xarm_msgs/GripperConfig.srv[0m
+[ 20%] [34m[1mGenerating EusLisp code from xarm_msgs/RobotMsg.msg[0m
+[ 20%] [34m[1mGenerating Lisp code from xarm_msgs/GetErr.srv[0m
+[ 21%] [34m[1mGenerating Javascript code from xarm_msgs/GripperMove.srv[0m
+[ 21%] [34m[1mGenerating C++ code from xarm_msgs/RobotMsg.msg[0m
+[ 22%] [34m[1mGenerating Python code from SRV xarm_msgs/GetDigitalIO[0m
+[ 22%] [34m[1mGenerating Python code from SRV xarm_msgs/GetAnalogIO[0m
+Traceback (most recent call last):
+  File "/opt/ros/kinetic/share/gencpp/cmake/../../../lib/gencpp/gen_cpp.py", line 41, in <module>
+    import genmsg.template_tools
+  File "/opt/ros/kinetic/lib/python2.7/dist-packages/genmsg/template_tools.py", line 39, in <module>
+    import em
+ModuleNotFoundError: No module named 'em'
+CMakeFiles/xarm_msgs_generate_messages_cpp.dir/build.make:228: recipe for target '/home/stepjam/catkin_ws/devel/include/xarm_msgs/RobotMsg.h' failed
+make[2]: *** [/home/stepjam/catkin_ws/devel/include/xarm_msgs/RobotMsg.h] Error 1
+make[1]: *** [CMakeFiles/xarm_msgs_generate_messages_cpp.dir/all] Error 2
+CMakeFiles/Makefile2:1375: recipe for target 'CMakeFiles/xarm_msgs_generate_messages_cpp.dir/all' failed
+make[1]: *** Waiting for unfinished jobs....
+[ 22%] [34m[1mGenerating Python code from SRV xarm_msgs/ClearErr[0m
+[ 23%] [34m[1mGenerating Lisp code from xarm_msgs/GripperConfig.srv[0m
+[ 24%] [34m[1mGenerating Javascript code from xarm_msgs/GripperState.srv[0m
+[ 24%] [34m[1mGenerating Python code from SRV xarm_msgs/GetErr[0m
+[ 25%] [34m[1mGenerating Lisp code from xarm_msgs/GripperMove.srv[0m
+[ 25%] [34m[1mGenerating Lisp code from xarm_msgs/GripperState.srv[0m
+[ 25%] [34m[1mGenerating Javascript code from xarm_msgs/SetLoad.srv[0m
+[ 26%] [34m[1mGenerating EusLisp code from xarm_msgs/IOState.msg[0m
+[ 27%] [34m[1mGenerating EusLisp code from xarm_msgs/CIOState.msg[0m
+[ 27%] [34m[1mGenerating Lisp code from xarm_msgs/SetLoad.srv[0m
+[ 27%] [34m[1mGenerating Python code from SRV xarm_msgs/GripperConfig[0m
+[ 27%] [34m[1mGenerating Javascript code from xarm_msgs/SetToolModbus.srv[0m
+[ 27%] [34m[1mGenerating Lisp code from xarm_msgs/SetToolModbus.srv[0m
+[ 28%] [34m[1mGenerating Javascript code from xarm_msgs/ConfigToolModbus.srv[0m
+[ 29%] [34m[1mGenerating Lisp code from xarm_msgs/ConfigToolModbus.srv[0m
+[ 30%] [34m[1mGenerating Python code from SRV xarm_msgs/GripperMove[0m
+[ 30%] [34m[1mGenerating Javascript code from xarm_msgs/GetControllerDigitalIO.srv[0m
+[ 31%] [34m[1mGenerating EusLisp code from xarm_msgs/Move.srv[0m
+[ 32%] [34m[1mGenerating Lisp code from xarm_msgs/GetControllerDigitalIO.srv[0m
+[ 32%] [34m[1mGenerating Python code from SRV xarm_msgs/GripperState[0m
+[ 34%] [34m[1mGenerating EusLisp code from xarm_msgs/SetAxis.srv[0m
+[ 35%] [34m[1mGenerating Javascript code from xarm_msgs/SetControllerAnalogIO.srv[0m
+[ 36%] [34m[1mGenerating Lisp code from xarm_msgs/SetControllerAnalogIO.srv[0m
+[ 37%] [34m[1mGenerating Lisp code from xarm_msgs/MoveAxisAngle.srv[0m
+[ 37%] [34m[1mGenerating Python code from SRV xarm_msgs/SetLoad[0m
+[ 37%] [34m[1mGenerating Lisp code from xarm_msgs/MoveVelo.srv[0m
+[ 38%] [34m[1mGenerating Lisp code from xarm_msgs/MoveVelocity.srv[0m
+[ 39%] [34m[1mGenerating Javascript code from xarm_msgs/MoveAxisAngle.srv[0m
+[ 39%] [34m[1mGenerating Javascript code from xarm_msgs/MoveVelo.srv[0m
+[ 40%] [34m[1mGenerating Lisp code from xarm_msgs/SetFloat32.srv[0m
+[ 40%] [34m[1mGenerating Python code from SRV xarm_msgs/SetToolModbus[0m
+[ 40%] [34m[1mGenerating EusLisp code from xarm_msgs/SetInt16.srv[0m
+[ 41%] [34m[1mGenerating Javascript code from xarm_msgs/MoveVelocity.srv[0m
+[ 42%] [34m[1mGenerating Lisp code from xarm_msgs/SetString.srv[0m
+[ 43%] [34m[1mGenerating Lisp code from xarm_msgs/SetMultipleInts.srv[0m
+[ 44%] [34m[1mGenerating Python code from SRV xarm_msgs/ConfigToolModbus[0m
+[ 44%] [34m[1mGenerating Javascript code from xarm_msgs/SetFloat32.srv[0m
+[ 44%] [34m[1mGenerating Lisp code from xarm_msgs/PlayTraj.srv[0m
+[ 45%] [34m[1mGenerating Lisp code from xarm_msgs/GetFloat32List.srv[0m
+[ 46%] [34m[1mGenerating Python code from SRV xarm_msgs/GetControllerDigitalIO[0m
+[ 47%] [34m[1mGenerating Python code from SRV xarm_msgs/SetControllerAnalogIO[0m
+[ 48%] [34m[1mGenerating Javascript code from xarm_msgs/SetMultipleInts.srv[0m
+[ 48%] [34m[1mGenerating Lisp code from xarm_msgs/GetInt32.srv[0m
+[ 50%] [34m[1mGenerating EusLisp code from xarm_msgs/TCPOffset.srv[0m
+[ 51%] [34m[1mGenerating Javascript code from xarm_msgs/SetString.srv[0m
+[ 52%] [34m[1mGenerating Python code from SRV xarm_msgs/MoveAxisAngle[0m
+[ 52%] [34m[1mGenerating Python code from SRV xarm_msgs/MoveVelo[0m
+[ 52%] Built target xarm_msgs_generate_messages_lisp
+[ 53%] [34m[1mGenerating Javascript code from xarm_msgs/PlayTraj.srv[0m
+[ 54%] [34m[1mGenerating Javascript code from xarm_msgs/GetFloat32List.srv[0m
+[ 55%] [34m[1mGenerating Python code from SRV xarm_msgs/MoveVelocity[0m
+[ 56%] [34m[1mGenerating EusLisp code from xarm_msgs/SetDigitalIO.srv[0m
+[ 57%] [34m[1mGenerating Javascript code from xarm_msgs/GetInt32.srv[0m
+[ 57%] [34m[1mGenerating EusLisp code from xarm_msgs/GetDigitalIO.srv[0m
+[ 58%] [34m[1mGenerating Python code from SRV xarm_msgs/SetFloat32[0m
+[ 58%] Built target xarm_msgs_generate_messages_nodejs
+[ 59%] [34m[1mGenerating EusLisp code from xarm_msgs/GetAnalogIO.srv[0m
+[ 60%] [34m[1mGenerating Python code from SRV xarm_msgs/SetMultipleInts[0m
+[ 61%] [34m[1mGenerating EusLisp code from xarm_msgs/ClearErr.srv[0m
+[ 62%] [34m[1mGenerating EusLisp code from xarm_msgs/GetErr.srv[0m
+[ 63%] [34m[1mGenerating Python code from SRV xarm_msgs/SetString[0m
+[ 64%] [34m[1mGenerating Python code from SRV xarm_msgs/PlayTraj[0m
+[ 65%] [34m[1mGenerating Python code from SRV xarm_msgs/GetFloat32List[0m
+[ 67%] [34m[1mGenerating Python code from SRV xarm_msgs/GetInt32[0m
+[ 68%] [34m[1mGenerating EusLisp code from xarm_msgs/GripperConfig.srv[0m
+[ 68%] [34m[1mGenerating EusLisp code from xarm_msgs/GripperMove.srv[0m
+[ 69%] [34m[1mGenerating Python msg __init__.py for xarm_msgs[0m
+[ 70%] [34m[1mGenerating Python srv __init__.py for xarm_msgs[0m
+[ 71%] [34m[1mGenerating EusLisp code from xarm_msgs/GripperState.srv[0m
+[ 72%] [34m[1mGenerating EusLisp code from xarm_msgs/SetLoad.srv[0m
+[ 72%] Built target xarm_msgs_generate_messages_py
+[ 73%] [34m[1mGenerating EusLisp code from xarm_msgs/SetToolModbus.srv[0m
+[ 73%] [34m[1mGenerating EusLisp code from xarm_msgs/ConfigToolModbus.srv[0m
+[ 74%] [34m[1mGenerating EusLisp code from xarm_msgs/GetControllerDigitalIO.srv[0m
+[ 74%] [34m[1mGenerating EusLisp code from xarm_msgs/SetControllerAnalogIO.srv[0m
+[ 74%] [34m[1mGenerating EusLisp code from xarm_msgs/MoveAxisAngle.srv[0m
+[ 75%] [34m[1mGenerating EusLisp code from xarm_msgs/MoveVelo.srv[0m
+[ 76%] [34m[1mGenerating EusLisp code from xarm_msgs/MoveVelocity.srv[0m
+[ 77%] [34m[1mGenerating EusLisp code from xarm_msgs/SetFloat32.srv[0m
+[ 78%] [34m[1mGenerating EusLisp code from xarm_msgs/SetMultipleInts.srv[0m
+[ 78%] [34m[1mGenerating EusLisp code from xarm_msgs/SetString.srv[0m
+[ 78%] [34m[1mGenerating EusLisp code from xarm_msgs/PlayTraj.srv[0m
+[ 79%] [34m[1mGenerating EusLisp code from xarm_msgs/GetFloat32List.srv[0m
+[ 79%] [34m[1mGenerating EusLisp manifest code for xarm_msgs[0m
+[ 79%] [34m[1mGenerating EusLisp code from xarm_msgs/GetInt32.srv[0m
+[ 79%] Built target xarm_msgs_generate_messages_eus
+Makefile:145: recipe for target 'all' failed
+make: *** [all] Error 2

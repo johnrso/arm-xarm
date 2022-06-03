@@ -1,0 +1,82 @@
+[  0%] Built target dynamic_reconfigure_generate_messages_py
+[  0%] Built target xarm_msgs_generate_messages_cpp
+[  0%] Built target dynamic_reconfigure_gencfg
+[ 10%] [32mBuilding CXX object CMakeFiles/sample_motion.dir/src/sample_motion.cpp.o[0m
+[ 10%] Built target dynamic_reconfigure_generate_messages_lisp
+[ 10%] Built target actionlib_generate_messages_eus
+[ 10%] Built target actionlib_generate_messages_py
+[ 10%] Built target xarm_msgs_generate_messages_lisp
+[ 10%] Built target trajectory_msgs_generate_messages_cpp
+[ 10%] Built target dynamic_reconfigure_generate_messages_eus
+[ 10%] Built target dynamic_reconfigure_generate_messages_cpp
+[ 10%] Built target control_toolbox_generate_messages_lisp
+[ 10%] Built target control_toolbox_gencfg
+[ 10%] Built target control_toolbox_generate_messages_eus
+[ 10%] Built target dynamic_reconfigure_generate_messages_nodejs
+[ 10%] Built target trajectory_msgs_generate_messages_py
+[ 10%] Built target xarm_msgs_generate_messages_eus
+[ 10%] Built target trajectory_msgs_generate_messages_eus
+[ 10%] Built target trajectory_msgs_generate_messages_nodejs
+[ 10%] Built target control_msgs_generate_messages_lisp
+[ 10%] Built target trajectory_msgs_generate_messages_lisp
+[ 10%] Built target roscpp_generate_messages_lisp
+[ 10%] Built target std_msgs_generate_messages_eus
+[ 10%] Built target controller_manager_msgs_generate_messages_eus
+[ 10%] Built target rosgraph_msgs_generate_messages_py
+[ 10%] Built target rosgraph_msgs_generate_messages_lisp
+[ 10%] Built target roscpp_generate_messages_nodejs
+[ 10%] Built target control_toolbox_generate_messages_cpp
+[ 10%] Built target rosgraph_msgs_generate_messages_nodejs
+[ 10%] Built target rosgraph_msgs_generate_messages_cpp
+[ 10%] Built target std_msgs_generate_messages_py
+[ 10%] Built target actionlib_generate_messages_lisp
+[ 10%] Built target control_toolbox_generate_messages_nodejs
+[ 10%] Built target std_msgs_generate_messages_lisp
+[ 10%] Built target geometry_msgs_generate_messages_lisp
+[ 10%] Built target control_toolbox_generate_messages_py
+[ 10%] Built target actionlib_msgs_generate_messages_eus
+[ 10%] Built target roscpp_generate_messages_cpp
+[ 10%] Built target roscpp_generate_messages_eus
+[ 10%] Built target controller_manager_msgs_generate_messages_cpp
+[ 10%] Built target controller_manager_msgs_generate_messages_nodejs
+[ 10%] Built target geometry_msgs_generate_messages_eus
+[ 10%] Built target xarm_msgs_generate_messages_py
+[ 10%] Built target actionlib_msgs_generate_messages_py
+[ 10%] Built target geometry_msgs_generate_messages_nodejs
+[ 10%] Built target roscpp_generate_messages_py
+[ 10%] Built target rosgraph_msgs_generate_messages_eus
+[ 10%] Built target control_msgs_generate_messages_eus
+[ 10%] Built target sensor_msgs_generate_messages_nodejs
+[ 10%] Built target sensor_msgs_generate_messages_cpp
+[ 10%] Built target control_msgs_generate_messages_nodejs
+[ 10%] Built target controller_manager_msgs_generate_messages_lisp
+[ 10%] Built target controller_manager_msgs_generate_messages_py
+[ 10%] Built target actionlib_msgs_generate_messages_cpp
+[ 10%] Built target actionlib_generate_messages_nodejs
+[ 10%] Built target std_msgs_generate_messages_cpp
+[ 10%] Built target sensor_msgs_generate_messages_eus
+[ 10%] Built target sensor_msgs_generate_messages_lisp
+[ 10%] Built target xarm_msgs_generate_messages_nodejs
+[ 10%] Built target actionlib_generate_messages_cpp
+[ 10%] Built target sensor_msgs_generate_messages_py
+[ 10%] Built target std_msgs_generate_messages_nodejs
+[ 10%] Built target geometry_msgs_generate_messages_py
+[ 10%] Built target control_msgs_generate_messages_cpp
+[ 10%] Built target control_msgs_generate_messages_py
+[ 10%] Built target actionlib_msgs_generate_messages_lisp
+[ 10%] Built target actionlib_msgs_generate_messages_nodejs
+[ 10%] Built target geometry_msgs_generate_messages_cpp
+[ 20%] [32mBuilding CXX object CMakeFiles/xarm_hw.dir/src/xarm_hw.cpp.o[0m
+[ 30%] [32m[1mLinking CXX executable /home/stepjam/catkin_ws/devel/lib/xarm_controller/sample_motion[0m
+[ 30%] Built target sample_motion
+[ 40%] [32m[1mLinking CXX shared library /home/stepjam/catkin_ws/devel/lib/libxarm_hw.so[0m
+[ 40%] Built target xarm_hw
+[ 50%] [32mBuilding CXX object CMakeFiles/xarm_combined_hw.dir/src/xarm_combined_hw.cpp.o[0m
+[ 60%] [32mBuilding CXX object CMakeFiles/xarm_traj_controller.dir/src/xarm_control_node.cpp.o[0m
+[ 70%] [32m[1mLinking CXX shared library /home/stepjam/catkin_ws/devel/lib/libxarm_combined_hw.so[0m
+[ 70%] Built target xarm_combined_hw
+[ 80%] [32mBuilding CXX object CMakeFiles/xarm_combined_traj_controller.dir/src/xarm_combined_control_node.cpp.o[0m
+[ 90%] [32m[1mLinking CXX executable /home/stepjam/catkin_ws/devel/lib/xarm_controller/xarm_traj_controller[0m
+[ 90%] Built target xarm_traj_controller
+[100%] [32m[1mLinking CXX executable /home/stepjam/catkin_ws/devel/lib/xarm_controller/xarm_combined_traj_controller[0m
+[100%] Built target xarm_combined_traj_controller

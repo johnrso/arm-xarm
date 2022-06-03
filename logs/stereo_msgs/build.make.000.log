@@ -1,0 +1,24 @@
+[  0%] Built target std_msgs_generate_messages_py
+[  0%] Built target sensor_msgs_generate_messages_py
+[  0%] Built target sensor_msgs_generate_messages_nodejs
+[  0%] Built target std_msgs_generate_messages_lisp
+[  0%] Built target std_msgs_generate_messages_nodejs
+[  0%] Built target sensor_msgs_generate_messages_lisp
+[  0%] Built target sensor_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_eus
+[  0%] Built target std_msgs_generate_messages_cpp
+[  0%] Built target _stereo_msgs_generate_messages_check_deps_DisparityImage
+[  0%] Built target sensor_msgs_generate_messages_cpp
+[ 14%] [34m[1mGenerating Python from MSG stereo_msgs/DisparityImage[0m
+[ 28%] [34m[1mGenerating Javascript code from stereo_msgs/DisparityImage.msg[0m
+[ 42%] [34m[1mGenerating Lisp code from stereo_msgs/DisparityImage.msg[0m
+[ 57%] [34m[1mGenerating EusLisp code from stereo_msgs/DisparityImage.msg[0m
+[ 57%] Built target stereo_msgs_generate_messages_nodejs
+[ 57%] Built target stereo_msgs_generate_messages_lisp
+[ 71%] [34m[1mGenerating EusLisp manifest code for stereo_msgs[0m
+[ 85%] [34m[1mGenerating Python msg __init__.py for stereo_msgs[0m
+[100%] [34m[1mGenerating C++ code from stereo_msgs/DisparityImage.msg[0m
+[100%] Built target stereo_msgs_generate_messages_py
+[100%] Built target stereo_msgs_generate_messages_cpp
+[100%] Built target stereo_msgs_generate_messages_eus
+[100%] Built target stereo_msgs_generate_messages
