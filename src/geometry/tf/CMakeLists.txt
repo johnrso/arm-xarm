@@ -13,7 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
     std_msgs
     tf2_ros
 )
-find_package(Boost REQUIRED COMPONENTS thread signals system)
+find_package(Boost REQUIRED COMPONENTS thread system)
 
 catkin_python_setup()
 

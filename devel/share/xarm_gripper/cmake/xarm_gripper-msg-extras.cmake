@@ -1,2 +1,0 @@
-set(xarm_gripper_MESSAGE_FILES "/home/stepjam/catkin_ws/devel/share/xarm_gripper/msg/MoveAction.msg;/home/stepjam/catkin_ws/devel/share/xarm_gripper/msg/MoveActionGoal.msg;/home/stepjam/catkin_ws/devel/share/xarm_gripper/msg/MoveActionResult.msg;/home/stepjam/catkin_ws/devel/share/xarm_gripper/msg/MoveActionFeedback.msg;/home/stepjam/catkin_ws/devel/share/xarm_gripper/msg/MoveGoal.msg;/home/stepjam/catkin_ws/devel/share/xarm_gripper/msg/MoveResult.msg;/home/stepjam/catkin_ws/devel/share/xarm_gripper/msg/MoveFeedback.msg")
-set(xarm_gripper_SERVICE_FILES "")
