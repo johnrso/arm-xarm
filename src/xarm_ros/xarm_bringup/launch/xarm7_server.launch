@@ -11,10 +11,12 @@
   <arg name="enforce_limits" default="true" />
   <arg name="baud_checkset" default="true" />
 	<arg name="default_gripper_baud" default="2000000" />
+  <arg name="show_rviz" default="false" />
+  <arg name="add_gripper" default="false" />
   
   <rosparam file="$(find xarm7_moveit_config)/config/xarm7_params.yaml" command="load" ns="$(arg ns)"/>
   <rosparam if="$(arg use_moveit)" file="$(find xarm7_moveit_config)/config/joint_limits.yaml" command="load" ns="$(arg ns)"/>
-
+  <param name="$(arg ns)/uf_model" value="XARM" />
   <!-- common: bring up node to collect robot feedback -->
   <include file="$(find xarm_bringup)/launch/xarm_driver_common.launch">
     <arg name="robot_ip" value="$(arg robot_ip)" />
@@ -26,6 +28,8 @@
     <arg name="enforce_limits" value="$(arg enforce_limits)" />
     <arg name="baud_checkset" value="$(arg baud_checkset)" />
     <arg name="default_gripper_baud" value="$(arg default_gripper_baud)" />
+    <arg name="show_rviz" value="$(arg show_rviz)" />
+    <arg name="add_gripper" value="$(arg add_gripper)" />
   </include>
 
   <!-- the node for xarm gripper action server -->

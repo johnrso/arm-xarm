@@ -47,7 +47,7 @@ namespace xarm_csharp_demo
         [DllImport("xarm.dll")]
         public static extern int motion_enable(bool enable, int servo_id = 8);
         [DllImport("xarm.dll")]
-        public static extern int set_mode(int mode);
+        public static extern int set_mode(int mode, int detection_param = 0);
         [DllImport("xarm.dll")]
         public static extern int set_state(int state);
         [DllImport("xarm.dll")]
@@ -57,7 +57,7 @@ namespace xarm_csharp_demo
         [DllImport("xarm.dll")]
         public static extern int set_position(float[] pose, float radius = -1,
             float speed = 0, float acc = 0, float mvtime = 0,
-            bool wait = false, float timeout = NO_TIMEOUT);
+            bool wait = false, float timeout = NO_TIMEOUT, bool relative = false);
         [DllImport("xarm.dll")]
         public static extern int set_tool_position(float[] pose,
             float speed = 0, float acc = 0, float mvtime = 0,
@@ -65,7 +65,7 @@ namespace xarm_csharp_demo
         [DllImport("xarm.dll")]
         public static extern int set_servo_angle(float[] angles,
             float speed = 0, float acc = 0, float mvtime = 0,
-            bool wait = false, float timeout = NO_TIMEOUT, float radius = -1);
+            bool wait = false, float timeout = NO_TIMEOUT, float radius = -1, bool relative = false);
         [DllImport("xarm.dll")]
         public static extern int set_servo_angle_j(float[] angles,
             float speed = 0, float acc = 0, float mvtime = 0);
@@ -164,7 +164,7 @@ namespace xarm_csharp_demo
         [DllImport("xarm.dll")]
         public static extern int get_position(float[] pose);
         [DllImport("xarm.dll")]
-        public static extern int get_servo_angle(float[] angles);
+        public static extern int get_servo_angle(float[] angles, bool is_real = false);
 
         [DllImport("xarm.dll")]
         public static extern int get_suction_cup(ref int val);
@@ -255,13 +255,13 @@ namespace xarm_csharp_demo
         [DllImport("xarm.dll")]
         public static extern int clean_bio_gripper_error();
         [DllImport("xarm.dll")]
-        public static extern int set_tgpio_modbus_timeout(int timeout);
+        public static extern int set_tgpio_modbus_timeout(int timeout, bool is_transparent_transmission = false);
         [DllImport("xarm.dll")]
         public static extern int set_tgpio_modbus_baudrate(int baud);
         [DllImport("xarm.dll")]
         public static extern int get_tgpio_modbus_baudrate(ref int baud);
         [DllImport("xarm.dll")]
-        public static extern int getset_tgpio_modbus_data(byte[] modbus_data, int modbus_length, byte[] ret_data, int ret_length);
+        public static extern int getset_tgpio_modbus_data(byte[] modbus_data, int modbus_length, byte[] ret_data, int ret_length, byte host_id = 9, bool is_transparent_transmission = false, bool use_503_port = false);
         [DllImport("xarm.dll")]
         public static extern int set_self_collision_detection(bool on);
         [DllImport("xarm.dll")]
@@ -303,7 +303,7 @@ namespace xarm_csharp_demo
         public static extern int get_ft_sensor_error(ref int err);
 
         [DllImport("xarm.dll")]
-        public static extern int iden_tcp_load(float[] result);
+        public static extern int iden_tcp_load(float[] result, float estimated_mass = 0);
 
         [DllImport("xarm.dll")]
         public static extern int get_linear_track_error(ref int err);
@@ -341,24 +341,35 @@ namespace xarm_csharp_demo
         [DllImport("xarm.dll")]
         public static extern int get_checkset_default_baud(int type, ref int baud);
 
+        [DllImport("xarm.dll")]
+        public static extern int set_cartesian_velo_continuous(bool on_off);
+        [DllImport("xarm.dll")]
+        public static extern int set_allow_approx_motion(bool on_off);
+        [DllImport("xarm.dll")]
+        public static extern int get_joint_states(float[] position, float[] velocity, float[] effort, int num = 3);
+        [DllImport("xarm.dll")]
+        public static extern int iden_joint_friction(ref int result, byte[] sn);
+
+        [DllImport("xarm.dll")]
+        public static extern int set_only_check_type(byte only_check_type);
 
         public static int set_position(float[] pose, float radius = -1,
-            bool wait = false, float timeout = NO_TIMEOUT)
+            bool wait = false, float timeout = NO_TIMEOUT, bool relative = false)
         {
-            return set_position(pose, radius, 0, 0, 0, wait, timeout);
+            return set_position(pose, radius, 0, 0, 0, wait, timeout, relative);
         }
-        public static int set_position(float[] pose, bool wait = false, float timeout = NO_TIMEOUT)
+        public static int set_position(float[] pose, bool wait = false, float timeout = NO_TIMEOUT, bool relative = false)
         {
-            return set_position(pose, -1, 0, 0, 0, wait, timeout);
+            return set_position(pose, -1, 0, 0, 0, wait, timeout, relative);
         }
         public static int set_tool_position(float[] pose,
             bool wait = false, float timeout = NO_TIMEOUT)
         {
             return set_tool_position(pose, 0, 0, 0, wait, timeout);
         }
-        public static int set_servo_angle(float[] angles, bool wait = false, float timeout = NO_TIMEOUT, float radius = -1)
+        public static int set_servo_angle(float[] angles, bool wait = false, float timeout = NO_TIMEOUT, float radius = -1, bool relative = false)
         {
-            return set_servo_angle(angles, 0, 0, 0, wait, timeout, radius);
+            return set_servo_angle(angles, 0, 0, 0, wait, timeout, radius, relative);
         }
     }
 }

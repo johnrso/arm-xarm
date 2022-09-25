@@ -99,8 +99,8 @@ namespace XArmWrapper
 	int __stdcall motion_enable(bool enable, int servo_id) {
 		return arm->motion_enable(enable, servo_id);
 	}
-	int __stdcall set_mode(int mode) {
-		return arm->set_mode(mode);
+	int __stdcall set_mode(int mode, int detection_param) {
+		return arm->set_mode(mode, detection_param);
 	}
 	int __stdcall set_state(int state) {
 		return arm->set_state(state);
@@ -111,14 +111,14 @@ namespace XArmWrapper
 	int __stdcall clean_error(void) {
 		return arm->clean_error();
 	}
-	int __stdcall set_position(fp32 pose[6], fp32 radius, fp32 speed, fp32 acc, fp32 mvtime, bool wait, fp32 timeout) {
-		return arm->set_position(pose, radius, speed, acc, mvtime, wait, timeout);
+	int __stdcall set_position(fp32 pose[6], fp32 radius, fp32 speed, fp32 acc, fp32 mvtime, bool wait, fp32 timeout, bool relative) {
+		return arm->set_position(pose, radius, speed, acc, mvtime, wait, timeout, relative);
 	}
 	int __stdcall set_tool_position(fp32 pose[6], fp32 speed, fp32 acc, fp32 mvtime, bool wait, fp32 timeout) {
 		return arm->set_tool_position(pose, speed, acc, mvtime, wait, timeout);
 	}
-	int __stdcall set_servo_angle(fp32 angles[7], fp32 speed, fp32 acc, fp32 mvtime, bool wait, fp32 timeout, fp32 radius) {
-		return arm->set_servo_angle(angles, speed, acc, mvtime, wait, timeout, radius);
+	int __stdcall set_servo_angle(fp32 angles[7], fp32 speed, fp32 acc, fp32 mvtime, bool wait, fp32 timeout, fp32 radius, bool relative) {
+		return arm->set_servo_angle(angles, speed, acc, mvtime, wait, timeout, radius, relative);
 	}
 	int __stdcall set_servo_angle_j(fp32 angles[7], fp32 speed, fp32 acc, fp32 mvtime) {
 		return arm->set_servo_angle_j(angles, speed, acc, mvtime);
@@ -255,8 +255,8 @@ namespace XArmWrapper
 	int __stdcall get_position(fp32 pose[6]) {
 		return arm->get_position(pose);
 	}
-	int __stdcall get_servo_angle(fp32 angles[7]) {
-		return arm->get_servo_angle(angles);
+	int __stdcall get_servo_angle(fp32 angles[7], bool is_real) {
+		return arm->get_servo_angle(angles, is_real);
 	}
 
 	int __stdcall get_suction_cup(int *val) {
@@ -398,8 +398,8 @@ namespace XArmWrapper
 		return arm->clean_bio_gripper_error();
 	}
 
-	int __stdcall set_tgpio_modbus_timeout(int timeout) {
-		return arm->set_tgpio_modbus_timeout(timeout);
+	int __stdcall set_tgpio_modbus_timeout(int timeout, bool is_transparent_transmission) {
+		return arm->set_tgpio_modbus_timeout(timeout, is_transparent_transmission);
 	}
 	int __stdcall set_tgpio_modbus_baudrate(int baud) {
 		return arm->set_tgpio_modbus_baudrate(baud);
@@ -407,8 +407,8 @@ namespace XArmWrapper
 	int __stdcall get_tgpio_modbus_baudrate(int *baud) {
 		return arm->get_tgpio_modbus_baudrate(baud);
 	}
-	int __stdcall getset_tgpio_modbus_data(unsigned char *modbus_data, int modbus_length, unsigned char *ret_data, int ret_length) {
-		return arm->getset_tgpio_modbus_data(modbus_data, modbus_length, ret_data, ret_length);
+	int __stdcall getset_tgpio_modbus_data(unsigned char *modbus_data, int modbus_length, unsigned char *ret_data, int ret_length, unsigned char host_id, bool is_transparent_transmission, bool use_503_port) {
+		return arm->getset_tgpio_modbus_data(modbus_data, modbus_length, ret_data, ret_length, host_id, is_transparent_transmission, use_503_port);
 	}
 	int __stdcall set_self_collision_detection(bool on) {
 		return arm->set_self_collision_detection(on);
@@ -470,8 +470,8 @@ namespace XArmWrapper
 		return arm->get_ft_sensor_error(err);
 	}
 	
-	int __stdcall iden_tcp_load(float result[4]) {
-		return arm->iden_tcp_load(result);
+	int __stdcall iden_tcp_load(float result[4], float estimated_mass) {
+		return arm->iden_tcp_load(result, estimated_mass);
 	}
 
 	int __stdcall get_linear_track_error(int *err) {
@@ -528,5 +528,25 @@ namespace XArmWrapper
 
 	int __stdcall get_checkset_default_baud(int type, int *baud) {
 		return arm->get_checkset_default_baud(type, baud);
+	}
+
+	int __stdcall set_cartesian_velo_continuous(bool on_off) {
+		return arm->set_cartesian_velo_continuous(on_off);
+	}
+
+	int __stdcall set_allow_approx_motion(bool on_off) {
+		return arm->set_allow_approx_motion(on_off);
+	}
+
+	int __stdcall get_joint_states(fp32 position[7], fp32 velocity[7], fp32 effort[7], int num) {
+		return arm->get_joint_states(position, velocity, effort, num);
+	}
+
+	int __stdcall iden_joint_friction(int *result, unsigned char *sn) {
+		return arm->iden_joint_friction(result, sn);
+	}
+
+	int __stdcall set_only_check_type(unsigned char only_check_type) {
+		return arm->set_only_check_type(only_check_type);
 	}
 }

@@ -1,0 +1,12 @@
+<launch>
+
+  <include file="$(find arm_xarm)/launch/rs_rgbd.launch">
+  </include>
+
+  <node name="rviz"
+        pkg="rviz" type="rviz"
+        clear_params="true"
+        args="-d $(find arm_xarm)/rviz/calibrate_camera_extrinsic.rviz">
+  </node>
+
+</launch>

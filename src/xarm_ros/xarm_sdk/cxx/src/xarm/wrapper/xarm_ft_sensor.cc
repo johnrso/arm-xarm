@@ -53,13 +53,28 @@ int XArmAPI::ft_sensor_set_zero(void)
 int XArmAPI::ft_sensor_iden_load(float result[10])
 {
     if (!is_connected()) return API_CODE::NOT_CONNECTED;
+	int prot_flag = core->get_prot_flag();
+	core->set_prot_flag(2);
+	keep_heart_ = false;
 	int ret = core->ft_sensor_iden_load(result);
+	if (ret == 0) {
+		result[1] = result[1] * 1000.0; // x_centroid, m to mm
+		result[2] = result[2] * 1000.0; // y_centroid, m to mm
+		result[3] = result[3] * 1000.0; // z_centroid, m to mm
+	}
+	core->set_prot_flag(prot_flag);
+	keep_heart_ = true;
 	return _check_code(ret);
 }
 
-int XArmAPI::ft_sensor_cali_load(float load[10], bool association_setting_tcp_load, float m, float x, float y, float z)
+int XArmAPI::ft_sensor_cali_load(float load2[10], bool association_setting_tcp_load, float m, float x, float y, float z)
 {
     if (!is_connected()) return API_CODE::NOT_CONNECTED;
+	float load[10];
+	memcpy(load, load2, sizeof(float) * 10);
+	load[1] = load[1] / 1000.0; // x_centroid, mm to m
+	load[2] = load[2] / 1000.0; // y_centroid, mm to m
+	load[3] = load[3] / 1000.0; // z_centroid, mm to m
 	int ret = core->ft_sensor_cali_load(load);
 	ret = _check_code(ret);
 	if (ret == 0 && association_setting_tcp_load) {
@@ -121,9 +136,51 @@ int XArmAPI::get_ft_sensor_error(int *err)
 	return _check_code(ret);
 }
 
-int XArmAPI::iden_tcp_load(float result[4])
+int XArmAPI::iden_tcp_load(float result[4], float estimated_mass)
 {
     if (!is_connected()) return API_CODE::NOT_CONNECTED;
-	int ret = core->iden_tcp_load(result);
+	int prot_flag = core->get_prot_flag();
+	core->set_prot_flag(2);
+	keep_heart_ = false;
+	float mass = estimated_mass;
+	if (_version_is_ge(1, 9, 100) && estimated_mass <= 0) {
+		mass = 0.5;
+	}
+	int ret = core->iden_tcp_load(result, mass);
+	core->set_prot_flag(prot_flag);
+	keep_heart_ = true;
+	return _check_code(ret);
+}
+
+int XArmAPI::iden_joint_friction(int *result, unsigned char *sn)
+{
+	if (!is_connected()) return API_CODE::NOT_CONNECTED;
+	
+	unsigned char r_sn[14];
+	if (sn == NULL) {
+		unsigned char tmp_sn[40];
+		int code = get_robot_sn(tmp_sn);
+		if (code != 0) {
+			printf("iden_joint_friction -> get_robot_sn failed, code=%d\n", code);
+			return API_CODE::API_EXCEPTION;
+		}
+		memcpy(r_sn, tmp_sn, 14);
+	}
+	else {
+		memcpy(r_sn, sn, 14);
+	}
+	if (r_sn[0] != (is_lite6() ? 'L' : 'X') || (axis == 5 && r_sn[1] != 'F') || (axis == 6 && r_sn[1] != 'I') || (axis == 7 && r_sn[1] != 'S')) {
+		printf("iden_joint_friction -> get_robot_sn failed, sn=%s\n", r_sn);
+		return API_CODE::API_EXCEPTION;
+	}
+	
+	int prot_flag = core->get_prot_flag();
+	core->set_prot_flag(2);
+	keep_heart_ = false;
+	float tmp;
+	int ret = core->iden_joint_friction(r_sn, &tmp);
+	*result = tmp >= 0 ? 0 : -1;
+	core->set_prot_flag(prot_flag);
+	keep_heart_ = true;
 	return _check_code(ret);
 }

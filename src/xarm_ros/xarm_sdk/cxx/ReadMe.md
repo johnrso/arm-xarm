@@ -11,6 +11,20 @@
 - Protect the arm before unlocking the motor.
 
 ## Update Summary
+- > ### 1.11.0
+  - Support transparent transmission (240/241)
+  - Modified the centroid unit of `ft_sensor_iden_load` and `ft_sensor_cali_load` interfaces to millimeters (originally meters)
+
+- > ### 1.9.10 
+  - Support Lite6 Model
+  - Fix several bugs
+
+- > ### 1.9.0 
+  - Support friction parameter identification interface
+  - Support relative motion
+  - Repair time-consuming interface (identification) failure due to heartbeat mechanism
+  - Fix several bugs
+
 - > ### 1.8.4
   - Support the Six-axis Force Torque Sensor (not a third party)
   - Modify the reporting processing logic and optimize the processing of sticky packets

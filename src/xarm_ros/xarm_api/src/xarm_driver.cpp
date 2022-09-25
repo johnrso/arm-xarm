@@ -54,75 +54,85 @@ namespace xarm_api
     void XArmDriver::_report_data_callback(XArmReportData *report_data_ptr)
     {
         // ROS_INFO("[1] state: %d, error_code: %d", report_data_ptr->state, report_data_ptr->err);
-        curr_state_ = report_data_ptr->state;
-        curr_err_ = report_data_ptr->err;
-        curr_mode_ = report_data_ptr->mode;
-        curr_cmd_num_ = report_data_ptr->cmdnum;
+        curr_state = report_data_ptr->state;
+        curr_err = report_data_ptr->err;
+        curr_mode = report_data_ptr->mode;
+        curr_cmdnum = report_data_ptr->cmdnum;
+
+        ros::Time now = ros::Time::now();
+        joint_state_msg_.header.stamp = now;
+        for(int i = 0; i < dof_; i++)
+        {
+            joint_state_msg_.position[i] = (double)report_data_ptr->angle[i];
+            joint_state_msg_.velocity[i] = (double)report_data_ptr->rt_joint_spds[i];
+            joint_state_msg_.effort[i] = (double)report_data_ptr->tau[i];
+        }
+        pub_joint_state(joint_state_msg_);
+
+        xarm_state_msg_.state = report_data_ptr->state;
+        xarm_state_msg_.mode = report_data_ptr->mode;
+        xarm_state_msg_.cmdnum = report_data_ptr->cmdnum;
+        xarm_state_msg_.err = report_data_ptr->err;
+        xarm_state_msg_.warn = report_data_ptr->war;
+        xarm_state_msg_.mt_brake = report_data_ptr->mt_brake;
+        xarm_state_msg_.mt_able = report_data_ptr->mt_able;
+
+        for(int i = 0; i < dof_; i++)
+        {
+            xarm_state_msg_.angle[i] = (double)report_data_ptr->angle[i];
+        }
+        for(int i = 0; i < 6; i++)
+        {
+            xarm_state_msg_.pose[i] = report_data_ptr->pose[i];
+            xarm_state_msg_.offset[i] = report_data_ptr->tcp_offset[i];
+        }
+        xarm_state_msg_.header.stamp = now;
+        pub_robot_msg(xarm_state_msg_);
+        if (report_data_ptr->total_num >= 417) {
+            cgpio_state_msg_.header.stamp = now;
+            cgpio_state_msg_.state = report_data_ptr->cgpio_state;
+            cgpio_state_msg_.code = report_data_ptr->cgpio_code;
+            cgpio_state_msg_.input_digitals[0] = report_data_ptr->cgpio_input_digitals[0];
+            cgpio_state_msg_.input_digitals[1] = report_data_ptr->cgpio_input_digitals[1];
+            cgpio_state_msg_.output_digitals[0] = report_data_ptr->cgpio_output_digitals[0];
+            cgpio_state_msg_.output_digitals[1] = report_data_ptr->cgpio_output_digitals[1];
+
+            cgpio_state_msg_.input_analogs[0] = report_data_ptr->cgpio_input_analogs[0];
+            cgpio_state_msg_.input_analogs[1] = report_data_ptr->cgpio_input_analogs[1];
+            cgpio_state_msg_.output_analogs[0] = report_data_ptr->cgpio_output_analogs[0];
+            cgpio_state_msg_.output_analogs[1] = report_data_ptr->cgpio_output_analogs[1];
+
+            for (int i = 0; i < 16; ++i) {
+                cgpio_state_msg_.input_conf[i] = report_data_ptr->cgpio_input_conf[i];
+                cgpio_state_msg_.output_conf[i] = report_data_ptr->cgpio_output_conf[i];
+            }
+            pub_cgpio_state(cgpio_state_msg_);
+        }
+        
+        if ((report_type_ == "dev" && report_data_ptr->total_num >= 135) 
+            || (report_type_ == "rich" && report_data_ptr->total_num >= 481)) {
+            ftsensor_msg_.header.stamp = now;
+            ftsensor_msg_.header.frame_id = "uf_ft_sensor_ext_data";
+            ftsensor_msg_.wrench.force.x = report_data_ptr->ft_ext_force[0];
+            ftsensor_msg_.wrench.force.y = report_data_ptr->ft_ext_force[1];
+            ftsensor_msg_.wrench.force.z = report_data_ptr->ft_ext_force[2];
+            ftsensor_msg_.wrench.torque.x = report_data_ptr->ft_ext_force[3];
+            ftsensor_msg_.wrench.torque.y = report_data_ptr->ft_ext_force[4];
+            ftsensor_msg_.wrench.torque.z = report_data_ptr->ft_ext_force[5];
+            pub_ftsensor_ext_state(ftsensor_msg_);
+            ftsensor_msg_.header.frame_id = "uf_ft_sensor_raw_data";
+            ftsensor_msg_.wrench.force.x = report_data_ptr->ft_raw_force[0];
+            ftsensor_msg_.wrench.force.y = report_data_ptr->ft_raw_force[1];
+            ftsensor_msg_.wrench.force.z = report_data_ptr->ft_raw_force[2];
+            ftsensor_msg_.wrench.torque.x = report_data_ptr->ft_raw_force[3];
+            ftsensor_msg_.wrench.torque.y = report_data_ptr->ft_raw_force[4];
+            ftsensor_msg_.wrench.torque.z = report_data_ptr->ft_raw_force[5];
+            pub_ftsensor_raw_state(ftsensor_msg_);
+        }
     }
 
-    void XArmDriver::init(ros::NodeHandle& root_nh, std::string &server_ip)
-    {   
-        nh_ = root_nh;
-        nh_.getParam("DOF",dof_);
-        root_nh.getParam("xarm_report_type", report_type_);
-        bool baud_checkset = true;
-        if (root_nh.hasParam("baud_checkset")) {
-            root_nh.getParam("baud_checkset", baud_checkset);
-        }
-        int default_gripper_baud = 2000000;
-        if (root_nh.hasParam("default_gripper_baud")) {
-            root_nh.getParam("default_gripper_baud", default_gripper_baud);
-        }
-        
-        arm = new XArmAPI(
-            server_ip, 
-            true, // is_radian
-            false, // do_not_open
-            true, // check_tcp_limit
-            true, // check_joint_limit
-            true, // check_cmdnum_limit
-            false, // check_robot_sn
-            true, // check_is_ready
-            true, // check_is_pause
-            0, // max_callback_thread_count
-            512, // max_cmdnum
-            dof_, // init_axis
-            DEBUG_MODE, // debug
-            report_type_ // report_type
-        );
-        arm->set_baud_checkset_enable(baud_checkset);
-        arm->set_checkset_default_baud(1, default_gripper_baud);
-        arm->release_connect_changed_callback(true);
-        arm->release_report_data_callback(true);
-        // arm->register_connect_changed_callback(std::bind(&XArmDriver::_report_connect_changed_callback, this, std::placeholders::_1, std::placeholders::_2));
-        arm->register_report_data_callback(std::bind(&XArmDriver::_report_data_callback, this, std::placeholders::_1));
-        // arm->connect();
-
-        int err_warn[2] = {0};
-        int ret = arm->get_err_warn_code(err_warn);
-        if (err_warn[0] != 0) {
-            ROS_WARN("xArmErrorCode: %d", err_warn[0]);
-        }
-        
-        std::thread th(cmd_heart_beat, this);
-        th.detach();
-        int dbg_msg[16] = {0};
-        arm->core->servo_get_dbmsg(dbg_msg);
-
-        for(int i=0; i<dof_; i++)
-        {
-            if((dbg_msg[i*2]==1)&&(dbg_msg[i*2+1]==40))
-            {
-                arm->clean_error();
-                ROS_WARN("Cleared low-voltage error of joint %d", i+1);
-            }
-            else if((dbg_msg[i*2]==1))
-            {
-                arm->clean_error();
-                ROS_WARN("There is servo error code:(0x%x) in joint %d, trying to clear it..", dbg_msg[i*2+1], i+1);
-            }
-        }
-
+    void XArmDriver::_init_service(void)
+    {
         // api command services:
         motion_ctrl_server_ = nh_.advertiseService("motion_ctrl", &XArmDriver::MotionCtrlCB, this);
         set_mode_server_ = nh_.advertiseService("set_mode", &XArmDriver::SetModeCB, this);
@@ -193,15 +203,129 @@ namespace xarm_api
         get_position_rpy_server_ = nh_.advertiseService("get_position_rpy", &XArmDriver::GetPositionRPYCB, this);
         get_position_aa_server_ = nh_.advertiseService("get_position_axis_angle", &XArmDriver::GetPositionAACB, this); // aa for axis-angle
         get_tgpio_baudrate_server_ = nh_.advertiseService("get_tgpio_modbus_baudrate", &XArmDriver::GetTgpioBaudRateCB, this);
+        
+        set_modbus_timeout_server_ = nh_.advertiseService("set_tgpio_modbus_timeout", &XArmDriver::SetModbusToutCB, this);
+        getset_tgpio_modbus_server_ = nh_.advertiseService("getset_tgpio_modbus_data", &XArmDriver::GetSetModbusCB, this);
+    }
+
+    void XArmDriver::_init_publisher(void)
+    {
+        joint_state_msg_.header.frame_id = "joint-state data";
+        joint_state_msg_.name.resize(dof_);
+        joint_state_msg_.position.resize(dof_);
+        joint_state_msg_.velocity.resize(dof_, 0);
+        joint_state_msg_.effort.resize(dof_, 0);
+        for(int i = 0; i < dof_; i++)
+        {
+            joint_state_msg_.name[i] = joint_names_[i];
+        }
+        xarm_state_msg_.angle.resize(dof_);
 
         // state feedback topics:
         joint_state_ = nh_.advertise<sensor_msgs::JointState>("joint_states", 10, true);
         robot_rt_state_ = nh_.advertise<xarm_msgs::RobotMsg>("xarm_states", 10, true);
-        cgpio_state_ = nh_.advertise<xarm_msgs::CIOState>("xarm_cgpio_states", 10, true);
-        // ftsensor_state_ = nh_.advertise<geometry_msgs::WrenchStamped>("xarm_ftsensor_states", 10, true);
-
-        // subscribed topics
+        cgpio_state_ = nh_.advertise<xarm_msgs::CIOState>("controller_gpio_states", 10, true);
+        ftsensor_ext_state_ = nh_.advertise<geometry_msgs::WrenchStamped>("uf_ftsensor_ext_states", 10, true);
+        ftsensor_raw_state_ = nh_.advertise<geometry_msgs::WrenchStamped>("uf_ftsensor_raw_states", 10, true);
+    }
+    
+    void XArmDriver::_init_subscriber(void)
+    {
         sleep_sub_ = nh_.subscribe("sleep_sec", 1, &XArmDriver::SleepTopicCB, this);
+    }
+
+    void XArmDriver::_init_params(void)
+    {
+        curr_err = 0;
+		curr_state = 4;
+		curr_mode = 0;
+		curr_cmdnum = 0;
+        arm = NULL;
+
+        nh_.getParam("DOF", dof_);
+        nh_.getParam("joint_names", joint_names_);
+        nh_.getParam("xarm_report_type", report_type_);
+    }
+
+    void XArmDriver::init(ros::NodeHandle& root_nh, std::string &server_ip)
+    {   
+        nh_ = root_nh;
+        
+        bool baud_checkset = true;
+        if (nh_.hasParam("baud_checkset")) {
+            nh_.getParam("baud_checkset", baud_checkset);
+        }
+        int default_gripper_baud = 2000000;
+        if (nh_.hasParam("default_gripper_baud")) {
+            nh_.getParam("default_gripper_baud", default_gripper_baud);
+        }
+
+        _init_params();
+        _init_publisher();
+
+        arm = new XArmAPI(
+            server_ip, 
+            true, // is_radian
+            true, // do_not_open
+            true, // check_tcp_limit
+            true, // check_joint_limit
+            true, // check_cmdnum_limit
+            false, // check_robot_sn
+            true, // check_is_ready
+            true, // check_is_pause
+            0, // max_callback_thread_count
+            512, // max_cmdnum
+            dof_, // init_axis
+            DEBUG_MODE, // debug
+            report_type_ // report_type
+        );
+        arm->set_baud_checkset_enable(baud_checkset);
+        arm->set_checkset_default_baud(1, default_gripper_baud);
+        arm->release_connect_changed_callback(true);
+        arm->release_report_data_callback(true);
+        arm->register_connect_changed_callback(std::bind(&XArmDriver::_report_connect_changed_callback, this, std::placeholders::_1, std::placeholders::_2));
+        arm->register_report_data_callback(std::bind(&XArmDriver::_report_data_callback, this, std::placeholders::_1));
+        arm->connect();
+
+        int err_warn[2] = {0};
+        int ret = arm->get_err_warn_code(err_warn);
+        if (err_warn[0] != 0) {
+            ROS_WARN("xArmErrorCode: C%d: [ %s ]", err_warn[0], controller_error_interpreter(err_warn[0]).c_str());
+        }
+        
+        std::thread th(cmd_heart_beat, this);
+        th.detach();
+        int dbg_msg[16] = {0};
+        arm->core->servo_get_dbmsg(dbg_msg);
+
+        for(int i=0; i<dof_; i++)
+        {
+            if((dbg_msg[i*2]==1)&&(dbg_msg[i*2+1]==40))
+            {
+                arm->clean_error();
+                ROS_WARN("Cleared low-voltage error of joint %d", i+1);
+            }
+            else if((dbg_msg[i*2]==1))
+            {
+                arm->clean_error();
+                ROS_WARN("There is servo error code:(0x%x) in joint %d, trying to clear it..", dbg_msg[i*2+1], i+1);
+            }
+        }
+
+        _init_service();
+        _init_subscriber();
+        _init_gripper();
+    }
+
+    void XArmDriver::_init_gripper(void)
+    {
+        std::string uf_model;
+        nh_.getParam("uf_model", uf_model);
+        // ROS_INFO("UF_MODEL: %s\n", uf_model.c_str());
+        if(uf_model != "XARM")
+        {
+            return; // only for xArm Gripper
+        }
 
         ros::NodeHandle gripper_node("xarm_gripper");
 
@@ -244,7 +368,6 @@ namespace xarm_api
                 }
             }).detach();
         }
-        
     }
 
     void XArmDriver::_pub_gripper_joint_states(float pos)
@@ -324,7 +447,7 @@ namespace xarm_api
         bool is_move = true;
         std::thread([this, &target_pos, &is_move, &cur_pos]() {
             is_move = true;
-            int ret2 = arm->set_gripper_position(target_pos, true);
+            int ret2 = arm->set_gripper_position(target_pos, true, -1, false); // set wait_motion=false
             int err;
             arm->get_gripper_err_code(&err);
             ROS_INFO("set_gripper_position, ret=%d, err=%d, cur_pos=%f", ret2, err, cur_pos);
@@ -407,8 +530,8 @@ namespace xarm_api
     
     bool XArmDriver::GetErrCB(xarm_msgs::GetErr::Request & req, xarm_msgs::GetErr::Response & res)
     {
-        res.err = curr_err_;
-        res.message = "current error code = "  + std::to_string(res.err);
+        res.err = curr_err;
+        res.message = "current error code C"  + std::to_string(res.err) + ": [ " + controller_error_interpreter() + " ]";
         return true;
     }
 
@@ -459,6 +582,14 @@ namespace xarm_api
 			{
 				res.message = "cartesian velocity, ret = " + std::to_string(res.ret);
 			} break;
+            case 6:
+            {
+                res.message = "joint online, ret = " + std::to_string(res.ret);
+            } break;
+            case 7:
+            {
+                res.message = "cartesian online, ret = " + std::to_string(res.ret);
+            } break;
             default:
             {
                 res.message = "the failed mode, ret = " + std::to_string(res.ret);
@@ -644,10 +775,10 @@ namespace xarm_api
     bool XArmDriver::ConfigModbusCB(xarm_msgs::ConfigToolModbus::Request &req, xarm_msgs::ConfigToolModbus::Response &res)
     {
         res.message = "";
-        if(curr_err_)
+        if(curr_err)
         {
             arm->set_state(XARM_STATE::START);
-            ROS_WARN("Cleared Existing Error Code %d", curr_err_);
+            ROS_WARN("Cleared Existing Error Code %d", curr_err);
         }
 
         int ret = arm->set_tgpio_modbus_baudrate(req.baud_rate);
@@ -828,8 +959,8 @@ namespace xarm_api
                 pose[index] = req.pose[index];
             }
         }
-
-        res.ret = arm->set_servo_cartesian(pose, req.mvvelo, req.mvacc, req.mvtime);
+        bool is_tool_coord = (req.mvtime != 0.0);
+        res.ret = arm->set_servo_cartesian(pose, req.mvvelo, req.mvacc, req.mvtime, is_tool_coord);
         res.message = "move servo_cartesian, ret = " + std::to_string(res.ret);
         return true;
     }
@@ -1209,6 +1340,35 @@ namespace xarm_api
         return true;
     }
 
+    bool XArmDriver::SetModbusToutCB(xarm_msgs::SetModbusTimeout::Request &req, xarm_msgs::SetModbusTimeout::Response &res)
+    {
+        res.ret = arm->set_tgpio_modbus_timeout(req.timeout_ms, req.is_transparent_transmission);
+        res.message = "set_tgpio_modbus_timeout, ret="+ std::to_string(res.ret);
+        return true;
+    }
+
+    bool XArmDriver::GetSetModbusCB(xarm_msgs::GetSetModbusData::Request &req, xarm_msgs::GetSetModbusData::Response &res)
+    {
+        int send_len = req.send_data.size();
+        int recv_len = req.respond_len;
+        unsigned char * tx_data = new unsigned char [send_len]{0};
+        unsigned char * rx_data = new unsigned char [recv_len]{0};
+
+        for(int i=0; i<send_len; i++)
+        {
+            tx_data[i] = req.send_data[i];
+        }
+        res.ret = arm->getset_tgpio_modbus_data(tx_data, send_len, rx_data, recv_len, req.host_id, req.is_transparent_transmission, req.use_503_port);
+        for(int i=0; i<recv_len; i++)
+        {
+           res.respond_data.push_back(rx_data[i]);
+        }
+
+        delete [] tx_data;
+        delete [] rx_data;
+        return true;
+    }
+
     void XArmDriver::pub_robot_msg(xarm_msgs::RobotMsg &rm_msg)
     {   
         robot_rt_state_.publish(rm_msg);
@@ -1224,8 +1384,89 @@ namespace xarm_api
         cgpio_state_.publish(cio_msg);
     }
 
-    // void XArmDriver::pub_ftsensor_state(geometry_msgs::WrenchStamped &wrench_msg)
-    // {
-    //     ftsensor_state_.publish(wrench_msg);
-    // }
+    void XArmDriver::pub_ftsensor_ext_state(geometry_msgs::WrenchStamped &wrench_msg)
+    {
+        ftsensor_ext_state_.publish(wrench_msg);
+    }
+
+    void XArmDriver::pub_ftsensor_raw_state(geometry_msgs::WrenchStamped &wrench_msg)
+    {
+        ftsensor_raw_state_.publish(wrench_msg);
+    }
+
+    bool XArmDriver::is_connected(void) {
+        return arm == NULL ? false : arm->is_connected();
+    }
+
+    std::string XArmDriver::controller_error_interpreter(int err)
+    {
+        err = (err==-1) ? curr_err : err;
+        switch(err)
+        {
+            case 0:
+                return "Everything OK";
+            case 1:
+                return "Hardware Emergency STOP effective";
+            case 2:
+                return "Emergency IO of Control Box is triggered";
+            case 3:
+                return "Emergency Stop of Three-state Switch triggered";
+            case 11 ... 17:
+                return std::string("Servo Motor Error of Joint ") + std::to_string(err-10); 
+            case 19:
+                return "End Module Communication Error";
+            case 21:
+                return "Kinematic Error";
+            case 22:
+                return "Self-collision Error";
+            case 23:
+                return "Joint Angle Exceed Limit";
+            case 24:
+                return "Speed Exceeds Limit";
+            case 25:
+                return "Planning Error";
+            case 26:
+                return "System Real Time Error";
+            case 27:
+                return "Command Reply Error";
+            case 29:
+                return "Other Errors, please contact technical support";
+            case 30:
+                return "Feedback Speed Exceeds limit";
+            case 31:
+                return "Collision Caused Abnormal Joint Current";
+            case 32:
+                return "Circle Calculation Error";
+            case 33:
+                return "Controller GPIO Error";
+            case 34:
+                return "Trajectory Recording Timeout";
+            case 35:
+                return "Exceed Safety Boundary";
+            case 36:
+                return "Number of Delayed Command Exceed Limit";
+            case 37:
+                return "Abnormal Motion in Manual Mode";
+            case 38: 
+                return "Abnormal Joint Angle";
+            case 39:
+                return "Abnormal Communication Between Master and Slave IC of Power Board";
+            case 50:
+                return "Tool Force/Torque Sensor Error";
+            case 51:
+                return "Tool Force Torque Sensor Mode Setting Error";
+            case 52:
+                return "Tool Force Torque Sensor Zero Setting Error";
+            case 53:
+                return "Tool Force Torque Sensor Overload";
+            case 110:
+                return "Robot Arm Base Board Communication Error";
+            case 111:
+                return "Control Box External RS485 Device Communication Error";
+
+            default:
+                return "Abnormal Error Code, please contact support!";
+
+        }
+    }
 }

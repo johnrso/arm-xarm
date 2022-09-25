@@ -32,14 +32,14 @@ namespace XArmWrapper {
 	extern "C" __declspec(dllexport) void __stdcall disconnect(void);
 	
 	extern "C" __declspec(dllexport) int __stdcall motion_enable(bool enable, int servo_id=8);
-	extern "C" __declspec(dllexport) int __stdcall set_mode(int mode);
+	extern "C" __declspec(dllexport) int __stdcall set_mode(int mode, int detection_param = 0);
 	extern "C" __declspec(dllexport) int __stdcall set_state(int state);
 	extern "C" __declspec(dllexport) int __stdcall clean_warn(void);
 	extern "C" __declspec(dllexport) int __stdcall clean_error(void);
 
-	extern "C" __declspec(dllexport) int __stdcall set_position(fp32 pose[6], fp32 radius = -1, fp32 speed = 0, fp32 acc = 0, fp32 mvtime = 0, bool wait = false, fp32 timeout = NO_TIMEOUT);
+	extern "C" __declspec(dllexport) int __stdcall set_position(fp32 pose[6], fp32 radius = -1, fp32 speed = 0, fp32 acc = 0, fp32 mvtime = 0, bool wait = false, fp32 timeout = NO_TIMEOUT, bool relative = false);
 	extern "C" __declspec(dllexport) int __stdcall set_tool_position(fp32 pose[6], fp32 speed=0, fp32 acc=0, fp32 mvtime=0, bool wait=false, fp32 timeout=0);
-	extern "C" __declspec(dllexport) int __stdcall set_servo_angle(fp32 angles[7], fp32 speed = 0, fp32 acc = 0, fp32 mvtime = 0, bool wait = false, fp32 timeout = NO_TIMEOUT, fp32 radius = -1);
+	extern "C" __declspec(dllexport) int __stdcall set_servo_angle(fp32 angles[7], fp32 speed = 0, fp32 acc = 0, fp32 mvtime = 0, bool wait = false, fp32 timeout = NO_TIMEOUT, fp32 radius = -1, bool relative = false);
 	extern "C" __declspec(dllexport) int __stdcall set_servo_angle_j(fp32 angles[7], fp32 speed=0, fp32 acc=0, fp32 mvtime=0);
 	extern "C" __declspec(dllexport) int __stdcall set_servo_cartesian(fp32 pose[6], fp32 speed = 0, fp32 acc = 0, fp32 mvtime = 0, bool is_tool_coord = false);
 	extern "C" __declspec(dllexport) int __stdcall move_circle(fp32 pose1[6], fp32 pose2[6], fp32 percent, fp32 speed = 0, fp32 acc = 0, fp32 mvtime = 0, bool wait = false, fp32 timeout = NO_TIMEOUT);
@@ -87,7 +87,7 @@ namespace XArmWrapper {
 	extern "C" __declspec(dllexport) int __stdcall get_cmdnum(int *cmdnum);
 	extern "C" __declspec(dllexport) int __stdcall get_err_warn_code(int err_warn[2]);
 	extern "C" __declspec(dllexport) int __stdcall get_position(fp32 pose[6]);
-	extern "C" __declspec(dllexport) int __stdcall get_servo_angle(fp32 angles[7]);
+	extern "C" __declspec(dllexport) int __stdcall get_servo_angle(fp32 angles[7], bool is_real = false);
 
 	extern "C" __declspec(dllexport) int __stdcall get_inverse_kinematics(fp32 pose[6], fp32 angles[7]);
 	extern "C" __declspec(dllexport) int __stdcall get_forward_kinematics(fp32 angles[7], fp32 pose[6]);
@@ -138,10 +138,10 @@ namespace XArmWrapper {
 	extern "C" __declspec(dllexport) int __stdcall get_bio_gripper_status(int *status);
 	extern "C" __declspec(dllexport) int __stdcall get_bio_gripper_error(int *err);
 	extern "C" __declspec(dllexport) int __stdcall clean_bio_gripper_error(void);
-	extern "C" __declspec(dllexport) int __stdcall set_tgpio_modbus_timeout(int timeout);
+	extern "C" __declspec(dllexport) int __stdcall set_tgpio_modbus_timeout(int timeout, bool is_transparent_transmission = false);
 	extern "C" __declspec(dllexport) int __stdcall set_tgpio_modbus_baudrate(int baud);
 	extern "C" __declspec(dllexport) int __stdcall get_tgpio_modbus_baudrate(int *baud);
-	extern "C" __declspec(dllexport) int __stdcall getset_tgpio_modbus_data(unsigned char *modbus_data, int modbus_length, unsigned char *ret_data, int ret_length);
+	extern "C" __declspec(dllexport) int __stdcall getset_tgpio_modbus_data(unsigned char *modbus_data, int modbus_length, unsigned char *ret_data, int ret_length, unsigned char host_id = 9, bool is_transparent_transmission = false, bool use_503_port = false);
 	extern "C" __declspec(dllexport) int __stdcall set_self_collision_detection(bool on);
 	extern "C" __declspec(dllexport) int __stdcall set_simulation_robot(bool on);
 	extern "C" __declspec(dllexport) int __stdcall vc_set_joint_velocity(fp32 speeds[7], bool is_sync = true, fp32 duration = -1.0);
@@ -163,7 +163,7 @@ namespace XArmWrapper {
 		float *ft_mass = NULL, float *ft_dir_bias = NULL, float ft_centroid[3] = NULL, float ft_zero[6] = NULL, int *imp_coord = NULL, int imp_c_axis[6] = NULL, float M[6] = NULL, float K[6] = NULL, float B[6] = NULL,
 		int *f_coord = NULL, int f_c_axis[6] = NULL, float f_ref[6] = NULL, float f_limits[6] = NULL, float kp[6] = NULL, float ki[6] = NULL, float kd[6] = NULL, float xe_limit[6] = NULL);
 	extern "C" __declspec(dllexport) int __stdcall get_ft_sensor_error(int *err);
-	extern "C" __declspec(dllexport) int __stdcall iden_tcp_load(float result[4]);
+	extern "C" __declspec(dllexport) int __stdcall iden_tcp_load(float result[4], float estimated_mass = 0.0);
 
 	extern "C" __declspec(dllexport) int __stdcall get_linear_track_error(int *err);
 	extern "C" __declspec(dllexport) int __stdcall get_linear_track_status(int *status);
@@ -183,5 +183,10 @@ namespace XArmWrapper {
 	extern "C" __declspec(dllexport) int __stdcall set_baud_checkset_enable(bool enable);
 	extern "C" __declspec(dllexport) int __stdcall set_checkset_default_baud(int type, int baud);
 	extern "C" __declspec(dllexport) int __stdcall get_checkset_default_baud(int type, int *baud);
+	extern "C" __declspec(dllexport) int __stdcall set_cartesian_velo_continuous(bool on_off);
+	extern "C" __declspec(dllexport) int __stdcall set_allow_approx_motion(bool on_off);
+	extern "C" __declspec(dllexport) int __stdcall get_joint_states(fp32 position[7], fp32 velocity[7], fp32 effort[7], int num = 3);
+	extern "C" __declspec(dllexport) int __stdcall iden_joint_friction(int *result, unsigned char *sn = NULL);
+	extern "C" __declspec(dllexport) int __stdcall set_only_check_type(unsigned char only_check_type = 0);
 }
 

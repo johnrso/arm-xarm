@@ -81,6 +81,7 @@ public:
 	static const unsigned char LOAD_TRAJ = 63;
 	static const unsigned char PLAY_TRAJ = 64;
 	static const unsigned char GET_TRAJ_RW_STATUS = 65;
+	static const unsigned char ALLOW_APPROX_MOTION = 66;
 
 	static const unsigned char REPORT_TAU_OR_I = 70;
 	static const unsigned char SET_TIMER = 71;
@@ -94,9 +95,11 @@ public:
 	static const unsigned char SET_SELF_COLLIS_CHECK = 77;
 	static const unsigned char SET_COLLIS_TOOL = 78;
 	static const unsigned char SET_SIMULATION_ROBOT = 79;
+	static const unsigned char SET_CARTV_CONTINUE = 80;
 
 	static const unsigned char VC_SET_JOINTV = 81;
 	static const unsigned char VC_SET_CARTV = 82;
+	static const unsigned char MOVE_RELATIVE = 83;
 
 	static const unsigned char GET_TCP_POSE_AA = 91;
 	static const unsigned char MOVE_LINE_AA = 92;
@@ -113,6 +116,7 @@ public:
 	static const unsigned char CALI_TCP_ORIENT = 112;
 	static const unsigned char CALI_WRLD_ORIENT = 113;
 	static const unsigned char CALI_WRLD_POSE = 114;
+	static const unsigned char IDEN_FRIC = 115;
 
 	static const unsigned char TGPIO_MB_TIOUT = 123;
 	static const unsigned char TGPIO_MODBUS = 124;
@@ -157,6 +161,9 @@ public:
 	static const unsigned char FTSENSOR_GET_CONFIG = 212;
 
 	static const unsigned char GET_MAX_JOINT_VELOCITY = 231;
+
+	static const unsigned char TGPIO_COM_TIOUT = 240;
+	static const unsigned char TGPIO_COM_DATA = 241;
 };
 
 class UXBUS_STATE {
@@ -220,6 +227,8 @@ public:
 	static const int TEACH_CART = 3;
 	static const int VELO_JOINT = 4;
 	static const int VELO_CART = 5;
+	static const int ONLINE_JOINT = 6;
+	static const int ONLINE_CART = 7;
 };
 
 class XARM_STATE {
@@ -269,6 +278,8 @@ public:
 	static const int TRAJ_RW_TOUT = 32;
 	static const int TRAJ_PLAYBACK_TOUT = 33;
 	static const int SUCTION_CUP_TOUT = 41;
+
+	static const int MODE_IS_NOT_CORRECT = 51;
 
 	static const int LINEAR_TRACK_HAS_FAULT = 80;
 	static const int LINEAR_TRACK_SCI_IS_LOW = 81;

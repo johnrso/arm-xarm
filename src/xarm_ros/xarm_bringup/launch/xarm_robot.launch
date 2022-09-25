@@ -11,7 +11,7 @@
 	<param name = "$(arg hw_ns)/baud_checkset" type="bool" value = "$(arg baud_checkset)"/>
 	<param name = "$(arg hw_ns)/default_gripper_baud" type="int" value = "$(arg default_gripper_baud)"/>
 
-  <node name="robot_state_publisher" if="$(arg publish_tf)" pkg="robot_state_publisher" type="state_publisher" />
+    <node name="robot_state_publisher" if="$(arg publish_tf)" pkg="robot_state_publisher" type="state_publisher" />
 
 	<node name="xarm_driver" pkg="xarm_api" ns="$(arg hw_ns)" type="xarm_driver_node" output="screen" />
 </launch>
