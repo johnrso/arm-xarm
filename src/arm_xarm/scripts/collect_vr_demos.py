@@ -14,7 +14,6 @@ import path
 from termcolor import cprint
 from xarm_msgs.msg import RobotMsg
 
-sys.path.insert(0, '/home/stepjam/miniconda/envs/py37/lib/python3.7/site-packages')
 import cv_bridge
 import message_filters
 import rospy
@@ -96,20 +95,26 @@ class XArmControlInterface:
         cprint(f"==> Detected the controller: {self._controller_id}")
 
     def run(self):
+        # IR: commented these two lines (don't seem right)
+        # self._button_clicked['trackpad_pressed_button'] = True
+        # self.control(True)
         while True:
+            # print('line 100, before getting')
             result, state = self._vrsystem.getControllerState(
                 self._controller_id
             )
-            assert result == 1
+            # print('line 104, after getting state')
+            assert result == 1, f"expected 1 but got {result}"
             state = utils.dict_from_controller_state(state)
-
+            # print(state)
             if state["menu_button"]:
                 cprint("==> Starting to control the robot (restrict z axis)")
                 self._button_clicked["trackpad_pressed_button"] = True
                 self.control(True)
             elif state["trackpad_pressed_button"] == "none":
-                self._button_clicked["trackpad_pressed_button"] = False
+               self._button_clicked["trackpad_pressed_button"] = False
             elif self._button_clicked["trackpad_pressed_button"]:
+                print('line 115, trackpad_pressed_button')
                 pass
             elif state["trackpad_pressed_button"] == "bottom":
                 cprint("==> Starting to control the robot")
@@ -132,6 +137,8 @@ class XArmControlInterface:
                 cprint("==> Discarding the demo recording")
                 self._button_clicked["trackpad_pressed_button"] = True
                 self.discard_demo_recording()
+            else:
+                pass
 
 
     def save_demo_recording(self):
@@ -201,6 +208,7 @@ class XArmControlInterface:
     def _xarm_state_callback(
         self, state_msg: RobotMsg
     ):
+        print("received robot_msg")
         self._in_error = state_msg.err != 0
 
     def _demo_recording_callback(
@@ -300,10 +308,11 @@ class XArmControlInterface:
         T_controller_t0_in_base = None
         while True:
 
+
             if self._in_error:
-                utils.recover_xarm_from_error()
-                T_ee_t0_in_link0 = None
-                T_controller_t0_in_base = None
+               utils.recover_xarm_from_error()
+               T_ee_t0_in_link0 = None
+               T_controller_t0_in_base = None
 
             pose = self._vrsystem.getDeviceToAbsoluteTrackingPose(
                 openvr.TrackingUniverseStanding, 0, 16
@@ -316,6 +325,8 @@ class XArmControlInterface:
             )
             assert result == 1
             state = utils.dict_from_controller_state(state)
+
+            # print(state)
 
             if state["trackpad_pressed_button"] == "none":
                 self._button_clicked["trackpad_pressed_button"] = False
@@ -403,7 +414,10 @@ class XArmControlInterface:
             time.sleep(0.02)
 
             if self._real:
+                # TMP DEBUG
+                print(self._robot.angle_vector())
                 self._ri.angle_vector(self._robot.angle_vector(), time=1)
+                print("calling self._ri.angle_vector")
 
         self._ri.wait_interpolation()
 
@@ -411,19 +425,18 @@ class XArmControlInterface:
 
 
 def main():
-    # parser = argparse.ArgumentParser(
-    #     formatter_class=argparse.ArgumentDefaultsHelpFormatter,
-    # )
-    # parser.add_argument(
-    #     "controller_id", type=int, choices=[1, 2], help="controller id"
-    # )
-    # args = parser.parse_args()
+    parser = argparse.ArgumentParser(
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter,
+    )
+    parser.add_argument(
+        "--controller_id", type=int, default=3, help="controller id"
+    )
+    args = parser.parse_args()
 
     rospy.init_node("control_xarm")
 
     interface = XArmControlInterface(
-        # controller_id=args.controller_id, real=args.real
-        controller_id=1, real=True
+        controller_id=args.controller_id, real=True
     )
     interface.run()
 

@@ -1,5 +1,0 @@
-path
-termcolor
-numpy
-openvr
-open3d==0.9.0
