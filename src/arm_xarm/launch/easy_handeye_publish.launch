@@ -1,0 +1,6 @@
+<launch>
+  <include file="$(find easy_handeye)/launch/publish.launch">
+    <arg name="namespace_prefix" value="uarm_rs3_calibration"/>
+    <arg name="eye_on_hand" value="true"/>
+  </include>
+</launch>

@@ -6,10 +6,8 @@ import sys
 
 import numpy as np
 
-sys.path.remove('/opt/ros/kinetic/lib/python2.7/dist-packages')
 import imgviz
 import path
-sys.path.append('/opt/ros/kinetic/lib/python2.7/dist-packages')
 
 
 def main():
@@ -25,7 +23,7 @@ def main():
 
     sorted_dir = sorted(args.saved_dir.listdir())
     idxs = np.linspace(0, len(sorted_dir) - 1, 4)
-    idxs[2] += 10
+    print(idxs, len(sorted_dir))
     sorted_dir = [sorted_dir[int(i)] for i in idxs]
 
     frames = []

@@ -7,7 +7,7 @@ import openvr
 
 import tf.transformations as ttf
 
-import utils
+import utilities as utils
 
 
 def main():
